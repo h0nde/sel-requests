@@ -1,5 +1,5 @@
 # sel-requests
-A selenium-based requests module for evading TLS fingerprinting.
+A selenium-based requests-like module for evading TLS fingerprinting.
 
 ## Pros
 - Bypass JA3 fingerprinting
