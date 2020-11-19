@@ -5,7 +5,6 @@ import selenium.common
 import os
 import signal
 
-USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36"
 with open(__file__ + "/../" + "js/request.js") as f:
     js_request_template = f.read()
 
@@ -22,6 +21,12 @@ def create_chrome_options(proxy_url=None, user_agent=None):
     return options
 
 class Session:
+    user_agent: str
+    proxy_url: str
+    timeout: float
+    headers: dict
+    _webdriver: selenium.webdriver.Chrome
+
     def __init__(self, proxy_url=None, user_agent=None, timeout=10, headers=None):
         self.user_agent = user_agent or user_agent
         self.proxy_url = proxy_url
