@@ -27,7 +27,8 @@ with selrequests.Session() as s:
 
 # Documentation
 
-### Session(proxy_url=None, user_agent=DEFAULT)
+(Do not forget to set a user_agent, else it'll use HeadlessChrome by default)
+### Session(proxy_url=None, user_agent=None, timeout=10, headers=None)
 Creates a requests-like session
 
 ### Session.request(method, url, data, json, headers)
