@@ -26,6 +26,7 @@ class Session:
         self.proxy_url = proxy_url
         self.timeout = timeout
         self.headers = headers or {}
+        self._webdriver = None
         try:
             self.setup()
         except Exception as exc:
@@ -46,7 +47,8 @@ class Session:
         self._webdriver.set_script_timeout(self.timeout)
 
     def close(self):
-        self._webdriver.quit()
+        if self._webdriver:
+            self._webdriver.quit()
 
     def set_origin(self, url):
         self._webdriver.execute_script(
