@@ -3,3 +3,6 @@ class RequestException(Exception):
 
 class HTTPError(RequestException):
     pass
+
+class Timeout(RequestException):
+    pass
