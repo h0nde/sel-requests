@@ -31,12 +31,12 @@ with selrequests.Session() as s:
 ### Session(proxy_url=None, user_agent=None, timeout=10, headers=None)
 Creates a requests-like session
 
-### Session.request(method, url, data, json, headers)
-
-### Session.get, .post, .put, .patch, .delete
-
 ### Session.set_origin(url)
 Sets the instance's current page url, useful for setting Referer/Origin/Sec-Fetch headers.
+
+### Session.request(method, url, data=None, json=None, headers=None)
+
+### Session.get, .post, .put, .patch, .delete
 
 ### Session.close()
 Closes the selenium instance.
