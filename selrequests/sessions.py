@@ -41,8 +41,12 @@ class Session:
         self.close()
 
     def _setup(self):
+        options = create_chrome_options(
+            self.proxy_url,
+            self.user_agent
+        )
         self._webdriver = webdriver.Chrome(
-            options=create_chrome_options(self.proxy_url, self.user_agent),
+            options=options,
             service_log_path="NUL"
         )
         self._webdriver.set_script_timeout(self.timeout)
@@ -97,7 +101,7 @@ class Session:
         return resp
 
     def request(self, method: str, url: str, data: (dict, str)=None,
-            json: (dict, list, str, int)=None, headers: dict=None):
+            json: (dict, list, str, int)=None, headers: dict=None) -> Response:
         """
         Creates request object and passes it to .send.
 
