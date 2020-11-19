@@ -21,14 +21,16 @@ def create_chrome_options(proxy_url=None, user_agent=USER_AGENT):
     return options
 
 class Session:
-    def __init__(self, proxy_url=None, user_agent=USER_AGENT, timeout=10):
+    def __init__(self, user_agent=USER_AGENT, proxy_url=None, timeout=10, headers=None):
         self.user_agent = user_agent
-        self.headers = {}
-        self._webdriver = webdriver.Chrome(
-            options=create_chrome_options(proxy_url, self.user_agent),
-            service_log_path="NUL"
-        )
-        self._webdriver.set_script_timeout(timeout)
+        self.proxy_url = proxy_url
+        self.timeout = timeout
+        self.headers = headers or {}
+        try:
+            self.setup()
+        except Exception as exc:
+            self.__exit__(exc, 0, 0)
+            raise
 
     def __enter__(self):
         return self
@@ -36,16 +38,15 @@ class Session:
     def __exit__(self, *_):
         self.close()
 
+    def setup(self):
+        self._webdriver = webdriver.Chrome(
+            options=create_chrome_options(self.proxy_url, self.user_agent),
+            service_log_path="NUL"
+        )
+        self._webdriver.set_script_timeout(self.timeout)
+
     def close(self):
-        pid = int(self._webdriver.service.process.pid)
         self._webdriver.quit()
-        try:
-            os.kill(
-                pid,
-                signal.SIGTERM
-            )
-        except:
-            pass
 
     def set_origin(self, url):
         self._webdriver.execute_script(
