@@ -40,3 +40,12 @@ Sets the instance's current page url, useful for setting Referer/Origin/Sec-Fetc
 
 ### Session.close()
 Closes the selenium instance.
+
+## Exceptions
+
+### exceptions.RequestException
+All other exceptions are based on this.
+
+### exceptions.HTTPError
+
+### exceptions.Timeout
