@@ -1,4 +1,4 @@
-from .structures import Request, Response
+from .models import Request, Response
 from . import exceptions
 from selenium import webdriver
 import selenium.common
@@ -9,20 +9,21 @@ USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTM
 with open(__file__ + "/../" + "js/request.js") as f:
     js_request_template = f.read()
 
-def create_chrome_options(proxy_url=None, user_agent=USER_AGENT):
+def create_chrome_options(proxy_url=None, user_agent=None):
     options = webdriver.ChromeOptions()
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
     options.add_argument("--log-level=3")
-    options.add_argument(f"--user-agent={user_agent}")
     options.add_argument("--headless")
     options.add_argument("--disable-web-security")
     if proxy_url:
         options.add_argument(f"--proxy-server={proxy_url}")
+    if user_agent:
+        options.add_argument(f"--user-agent={user_agent}")
     return options
 
 class Session:
-    def __init__(self, user_agent=USER_AGENT, proxy_url=None, timeout=10, headers=None):
-        self.user_agent = user_agent
+    def __init__(self, proxy_url=None, user_agent=None, timeout=10, headers=None):
+        self.user_agent = user_agent or user_agent
         self.proxy_url = proxy_url
         self.timeout = timeout
         self.headers = headers or {}
@@ -77,6 +78,7 @@ class Session:
     
         headers = dict(self.headers)
         headers.update(request.headers)
+
         try:
             resp = Response(**self._webdriver.execute_script(
                 js_request_template,
@@ -85,10 +87,13 @@ class Session:
                 request.data,
                 headers
             ))
+        
         except selenium.common.exceptions.JavascriptException as err:
             raise exceptions.RequestException(err.msg)
+    
         except selenium.common.exceptions.TimeoutException as err:
             raise exceptions.Timeout(err.msg)
+    
         return resp
 
     def request(self, method: str, url: str, data: (dict, str)=None,
