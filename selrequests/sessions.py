@@ -5,7 +5,7 @@ import selenium.common
 import os
 import signal
 
-with open(__file__ + "/../" + "js/request.js") as f:
+with open(os.path.dirname(__file__) + "/js/request.js") as f:
     js_request_template = f.read()
 
 def create_chrome_options(proxy_url=None, user_agent=None):
@@ -13,6 +13,7 @@ def create_chrome_options(proxy_url=None, user_agent=None):
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
     options.add_argument("--log-level=3")
     options.add_argument("--headless")
+    options.add_argument("--no-sandbox")
     options.add_argument("--disable-web-security")
     if proxy_url:
         options.add_argument(f"--proxy-server={proxy_url}")
