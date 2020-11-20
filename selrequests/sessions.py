@@ -94,6 +94,8 @@ class Session:
                 js_request_template,
                 request.method,
                 request.url,
+                request.mode,
+                request.credentials,
                 request.data,
                 headers
             ))
@@ -107,7 +109,8 @@ class Session:
         return resp
 
     def request(self, method: str, url: str, data: (dict, str)=None,
-            json: (dict, list, str, int)=None, headers: dict=None) -> Response:
+                json: (dict, list, str, int)=None, headers: dict=None,
+                mode="same-origin", credentials="include") -> Response:
         """
         Constructs a :class:`Request <Request>`, prepares it and sends it.
         Returns :class:`Response <Response>` object.
@@ -117,9 +120,11 @@ class Session:
         :param data:
         :param json:
         :param headers:
+        :param mode:
+        :param credentials:
         """
 
-        req = Request(method, url, data, json, headers)
+        req = Request(method, url, data, json, headers, mode, credentials)
         resp = self.send(req)
         return resp
 
