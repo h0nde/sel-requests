@@ -94,10 +94,10 @@ class Session:
                 js_request_template,
                 request.method,
                 request.url,
+                request.data,
+                headers,
                 request.mode,
                 request.credentials,
-                request.data,
-                headers
             ))
         
         except selenium.common.exceptions.JavascriptException as err:
@@ -108,8 +108,8 @@ class Session:
     
         return resp
 
-    def request(self, method: str, url: str, data: (dict, str)=None,
-                json: (dict, list, str, int)=None, headers: dict=None,
+    def request(self, method: str, url: str, data=None,
+                json=None, headers: dict=None,
                 mode="same-origin", credentials="include") -> Response:
         """
         Constructs a :class:`Request <Request>`, prepares it and sends it.

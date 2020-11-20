@@ -3,7 +3,9 @@ var resp = await fetch(
     {
         method: arguments[0],
         body: arguments[2],
-        headers: arguments[3]
+        headers: arguments[3],
+        mode: arguments[4],
+        credentials: arguments[5]
     }
 )
 var body = await resp.text()
