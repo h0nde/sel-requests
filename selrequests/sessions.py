@@ -79,7 +79,7 @@ class Session:
 
     def send(self, request: Request) -> Response:
         """
-        Constructs a :class:`Request <Request>`, prepares it and sends it.
+        Sends :class:`Request <Request>`.
         Returns :class:`Response <Response>` object.
 
         :param request: :class:`Request`
@@ -109,7 +109,8 @@ class Session:
     def request(self, method: str, url: str, data: (dict, str)=None,
             json: (dict, list, str, int)=None, headers: dict=None) -> Response:
         """
-        Creates request object and passes it to .send.
+        Constructs a :class:`Request <Request>`, prepares it and sends it.
+        Returns :class:`Response <Response>` object.
 
         :param method:
         :param url:
