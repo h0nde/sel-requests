@@ -2,8 +2,7 @@ from .models import Request, Response
 from . import exceptions
 from selenium import webdriver
 import selenium.common
-import os
-import signal
+import os.path
 
 with open(os.path.dirname(__file__) + "/js/request.js") as f:
     js_request_template = f.read()
