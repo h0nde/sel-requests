@@ -10,10 +10,13 @@ class Request:
     data: (str, bytes, dict)
     
     def __init__(self, method, url, data=None,
-                 json=None, headers=None):
-        self.headers = CaseInsensitiveDict(headers)
+                 json=None, headers=None, mode="same-origin",
+                 credentials="include"):
         self.method = method
         self.url = url
+        self.mode = mode
+        self.credentials = credentials
+        self.headers = CaseInsensitiveDict(headers)
 
         if json is not None:
             self.headers["Content-Type"] = "application/json"
