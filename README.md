@@ -28,13 +28,13 @@ with selrequests.Session() as s:
 # Documentation
 
 (Do not forget to set a user_agent, else it'll use HeadlessChrome by default)
-### Session(proxy_url=None, user_agent=None, timeout=10, headers=None, mode="same-origin", credentials="include")
+### Session(proxy_url=None, user_agent=None, timeout=10, headers=None)
 Creates a requests-like session
 
 ### Session.set_origin(url)
 Sets the instance's current page url, useful for setting Referer/Origin/Sec-Fetch headers.
 
-### Session.request(method, url, data=None, json=None, headers=None)
+### Session.request(method, url, data=None, json=None, headers=None, mode="same-origin", credentials="include")
 
 ### Session.get, .post, .put, .patch, .delete
 
